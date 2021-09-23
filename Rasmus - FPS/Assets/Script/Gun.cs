@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class Pistol : MonoBehaviour
+public class Gun : MonoBehaviour
 {
 
     public float damage = 10f;
     public float range = 100f;
 
     public Camera fpsCam;
+    public ParticleSystem muzzelFlash;
 
     // Update is called once per frame
     void Update()
@@ -21,10 +22,18 @@ public class Pistol : MonoBehaviour
 
     void Shoot()
     {
+        muzzelFlash.Play();
+
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
+
+            Target target = hit.transform.GetComponent<Target>();
+            if (target != null)
+            {
+                target.TakeDamage(damage);
+            }
         }
     }
 }
