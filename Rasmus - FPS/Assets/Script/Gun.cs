@@ -29,14 +29,13 @@ public class Gun : MonoBehaviour
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
+            Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
 
             Target target = hit.transform.GetComponent<Target>();
             if (target != null)
             {
                 target.TakeDamage(damage);
             }
-
-            Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
         }
     }
 }
